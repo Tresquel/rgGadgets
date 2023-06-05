@@ -4,6 +4,8 @@
 
 This gadget allows the playback of a locally hosted `video.rgv` file which is a custom format that stores video data in a way that's easy to implement.
 
+This gadget requires internet permissions to function properly.
+
 This folder also provides the `convert.py` and `server.py` files to convert and host the video file.
 
 The gadget contains a button to fetch a video and a switch to display the gadgets ticks per second.

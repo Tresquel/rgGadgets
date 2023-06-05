@@ -27,7 +27,7 @@ Requirements:
 
 1. Install the requirements:
 `pip install -r requirements.txt`
-2. Put the video/gif you want to convert into the same folder where `convert.py` is located
+2. Put the video/gif you want to convert into the same folder where `convert.py` is located and make sure it's named `toconvert` otherwise the program won't see it.
 3. Run `convert.py` and wait for it to finish (depending on the size of the video it might take a while)
 4. After `convert.py` finishes, run `server.py`
 5. Start the gadget in-game and it should start downloading and playing the video.

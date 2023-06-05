@@ -1,5 +1,7 @@
 # Lamp controller
 
+![Gadget](../assets/lampcontroller.png)
+
 This gadget provides a remote similar to ones you get with cheap LED strips to control the lamp on the desk.
 
 Links:

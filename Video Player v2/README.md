@@ -25,7 +25,7 @@ Requirements:
 - Basic command line knowledge
 - FFmpeg
 
-1. Install the requirements:
+1. Install the PIP requirements:
 `pip install -r requirements.txt`
 2. Put the video/gif you want to convert into the same folder where `convert.py` is located and make sure it's named `toconvert` otherwise the program won't see it.
 3. Run `convert.py` and wait for it to finish (depending on the size of the video it might take a while)

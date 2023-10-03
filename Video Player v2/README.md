@@ -16,7 +16,31 @@ Links:
 - [Python](https://www.python.org/)
 - [FFmpeg](https://ffmpeg.org/)
 
-# How to use the converter and the server?
+# How to use the converter and the server
+
+There are 2 different versions of the converter:
+- The Rust one (way faster)
+- The Python one (a bit more complicated to use)
+
+You can choose either, they both work the same.
+The Rust version is less verbose and more automatic
+
+## How to use the Rust version
+Requirements:
+- FFmpeg
+- VC Redist
+- Python (for the `server.py`)
+- Rust if you want to compile it yourself
+
+How to use:
+- Put the executable next to your `toconvert.*` video.
+- Run the executable
+- Start the server
+- Start the gadget in-game and it should start downloading and playing the video.
+
+[Virustotal result](https://www.virustotal.com/gui/file-analysis/NDJkMmJkZDFmZWYwMDVlYzI1Y2U4YzkwOWU4YjdhMzU6MTY5NjM2MjE2Mw==)
+
+## How to use the Python version
 
 Requirements:
 - Python 3.10 or newer

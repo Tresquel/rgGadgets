@@ -38,7 +38,7 @@ How to use:
 - Start the server
 - Start the gadget in-game and it should start downloading and playing the video.
 
-[Virustotal result](https://www.virustotal.com/gui/file-analysis/NDJkMmJkZDFmZWYwMDVlYzI1Y2U4YzkwOWU4YjdhMzU6MTY5NjM2MjE2Mw==)
+[Virustotal result](https://www.virustotal.com/gui/file-analysis/NGRhNTQ1Zjc4ODZkOWVhMWQ2MWI3YmYxNWE5ZjBkMDQ6MTY5NjUzMzA0MQ==)
 
 ## How to use the Python version
 

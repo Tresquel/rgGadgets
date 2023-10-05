@@ -1,5 +1,7 @@
 extern crate image;
 
+use std::thread;
+use std::sync::mpsc;
 use image::GenericImageView;
 use std::fs::{metadata, File};
 use std::io::{Write, Result};
@@ -170,7 +172,7 @@ fn find_color_index(palette: &Vec<image::Rgb<u8>>, target_color: &image::Rgb<u8>
     palette.iter().position(|color| color == target_color)
 }
 
-fn convert_frame(temp_dir: &str, frame: u8, palette: &Vec<image::Rgb<u8>>) -> Vec<u8> {
+fn convert_frame(temp_dir: &str, frame: i32, palette: &Vec<image::Rgb<u8>>) -> Vec<u8> {
     let start = Instant::now();
     let mut frame_data = Vec::new();
 
@@ -192,7 +194,7 @@ fn convert_frame(temp_dir: &str, frame: u8, palette: &Vec<image::Rgb<u8>>) -> Ve
 
     let end = Instant::now();
     let elapsed = end.duration_since(start);
-    println!("Frame converted in {:?}", elapsed);
+    println!("Frame {} converted in {:?}", frame, elapsed);
 
     frame_data
 }
@@ -275,17 +277,56 @@ fn main() -> Result<()> {
 
     file.write_all(b"VIDEODATA")?; // begin of video data
 
+    println!("Starting frame conversion...");
+    let start = Instant::now();
+    // hyperthreading
+    let (tx, rx) = mpsc::channel();
+
     for i in 1..=frame_count {
-        let frame_data = convert_frame(&temp_dir, i as u8, &palette);
+        let tx = tx.clone();
+        let temp_dir = temp_dir.clone();
+        let palette = palette.clone();
+        // this will spawn a ton of threads causing the cpu usage to spike
+        // won't be a problem for videos smaller than it's possible to play
+        thread::spawn(move || {
+            let frame_data = convert_frame(&temp_dir, i, &palette);
+            tx.send((i, frame_data)).expect("Failed to send frame data");
+        });
+    }
+
+    let mut results: Vec<(i32, Vec<u8>)> = Vec::with_capacity(frame_count as usize);
+
+    for _ in 1..=frame_count {
+        let (i, frame_data) = rx.recv().expect("Failed to receive frame data");
+        results.push((i, frame_data));
+    }
+    // sort and write to file
+    results.sort_by_key(|&(i, _)| i);
+
+    for (_, frame_data) in results {
         file.write_all(&frame_data)?;
     }
 
+    let end = Instant::now();
+    let elapsed = end.duration_since(start);
+    println!("{} frames converted in {:?}", frame_count, elapsed);
+
+    // for i in 1..=frame_count {
+    //     let frame_data = convert_frame(&temp_dir, i as u8, &palette);
+    //     file.write_all(&frame_data)?;
+    // }
+
     // cleanup
     match fs::remove_dir_all(&temp_dir) {
-        Ok(_) => exit(0),
+        Ok(_) => {
+            println!("Done");
+            exit(0);
+        },
         Err(e) => {
             eprintln!("Couldn't clean up: {}", e);
             exit(0);
         }
-   }
+    }
+
+   Ok(())
 }

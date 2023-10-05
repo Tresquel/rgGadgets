@@ -15,6 +15,7 @@ Links:
 - [base64.lua](https://github.com/iskolbin/lbase64)
 - [Python](https://www.python.org/)
 - [FFmpeg](https://ffmpeg.org/)
+- [VC Redist](https://learn.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170)
 
 # How to use the converter and the server
 
